@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS demandes (
     email_visiteur  VARCHAR(150) NOT NULL,
     telephone       VARCHAR(20) DEFAULT NULL,
     message         TEXT,
+    admin_response  TEXT DEFAULT NULL,
     statut          ENUM('nouvelle', 'traitee', 'archivee') DEFAULT 'nouvelle',
     date_envoi      DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (bien_id) REFERENCES biens(id) ON DELETE CASCADE,

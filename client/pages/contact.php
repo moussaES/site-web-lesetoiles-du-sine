@@ -57,6 +57,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="contact-form">
         <h4 style="font-family:'Playfair Display',serif; margin-bottom:1.5rem;">Envoyez-nous un message</h4>
 
+        <?php if (!isLoggedIn()): ?>
+          <!-- Message pour utilisateurs non connectés -->
+          <div class="alert alert-info py-3 px-3" style="font-size:0.88rem; border-radius:var(--radius); text-align:center;">
+            <i class="bi bi-info-circle me-2"></i>
+            <strong>Connectez-vous ou inscrivez-vous</strong> pour envoyer votre message.
+          </div>
+          <div class="d-grid gap-2">
+            <a href="<?= SITE_URL ?>/client/login.php?redirect=<?= urlencode($_SERVER['REQUEST_URI']) ?>" 
+               class="btn btn-primary">
+              <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter
+            </a>
+            <a href="<?= SITE_URL ?>/client/pages/register.php" 
+               class="btn btn-outline-primary">
+              <i class="bi bi-person-plus me-2"></i>S'inscrire
+            </a>
+          </div>
+        <?php else: ?>
+        
         <?php if ($success): ?>
           <div class="alert alert-success" style="border-radius:var(--radius);">
             <i class="bi bi-check-circle me-2"></i><?= $success ?>
@@ -93,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
           </div>
         </form>
+        <?php endif; ?>
       </div>
     </div>
   </div>

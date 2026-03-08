@@ -140,6 +140,24 @@ require_once __DIR__ . '/../includes/header.php';
           <i class="bi bi-envelope-paper me-2" style="color:var(--gold);"></i>Demande d'information
         </h5>
 
+        <?php if (!isLoggedIn()): ?>
+          <!-- Message pour utilisateurs non connectés -->
+          <div class="alert alert-info py-3 px-3" style="font-size:0.88rem; border-radius:var(--radius); text-align:center;">
+            <i class="bi bi-info-circle me-2"></i>
+            <strong>Connectez-vous ou inscrivez-vous</strong> pour envoyer votre demande.
+          </div>
+          <div class="d-grid gap-2">
+            <a href="<?= SITE_URL ?>/client/login.php?redirect=<?= urlencode($_SERVER['REQUEST_URI']) ?>" 
+               class="btn btn-primary">
+              <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter
+            </a>
+            <a href="<?= SITE_URL ?>/client/pages/register.php" 
+               class="btn btn-outline-primary">
+              <i class="bi bi-person-plus me-2"></i>S'inscrire
+            </a>
+          </div>
+        <?php else: ?>
+        
         <?php if ($success): ?>
           <div class="alert alert-success py-2 px-3" style="font-size:0.88rem; border-radius:var(--radius);">
             <i class="bi bi-check-circle me-2"></i><?= $success ?>
@@ -176,8 +194,12 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="mt-3 pt-3 border-top text-center" style="border-color:#F0F1F3 !important;">
           <p style="font-size:0.8rem; color:var(--gray); margin:0;">
             Ou appelez-nous directement<br>
-            <a href="tel:+221770000000" style="color:var(--primary); font-weight:700; font-size:1rem;">
-              <i class="bi bi-telephone-fill me-1"></i>+221 77 000 00 00
+            <a href="tel:+221752588820" style="color:var(--primary); font-weight:700; font-size:1rem;">
+              <i class="bi bi-telephone-fill me-1"></i>+221 75 258 88 20
+            </a>
+          </p>
+        </div>
+        <?php endif; ?>
             </a>
           </p>
         </div>

@@ -67,13 +67,20 @@ immo/
 mysql -u root -p < database.sql
 ```
 
-> **Nouveauté** : la table `utilisateurs` prend désormais en charge le rôle
-> `gestionnaire`. Si vous avez déjà importé la base de données avant la
-> mise à jour, exécutez :
-> ```sql
-> ALTER TABLE utilisateurs MODIFY role ENUM('client','gestionnaire','admin')
->     DEFAULT 'client';
-> ```
+> **Nouveauté** :
+> 1. La table `utilisateurs` prend désormais en charge le rôle `gestionnaire`.
+>    Si vous aviez importé la base de données avant la mise à jour, exécutez :
+>    ```sql
+>    ALTER TABLE utilisateurs MODIFY role ENUM('client','gestionnaire','admin')
+>        DEFAULT 'client';
+>    ```
+> 2. La table `demandes` inclut maintenant une colonne `admin_response` pour
+>    stocker les réponses internes des commerciaux. Pour l'ajouter à une base
+>    existante, lancez :
+>    ```sql
+>    ALTER TABLE demandes ADD COLUMN admin_response TEXT DEFAULT NULL;
+>    ```
+
 
 ### 3. Configuration
 Ouvrir `includes/config.php` et modifier :

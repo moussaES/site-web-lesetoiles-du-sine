@@ -24,7 +24,16 @@ $demandes = $pdo->query("
     $where
     ORDER BY d.date_envoi DESC
 ")->fetchAll();
-
+// Réponse interne (via modal form)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reply_id'])) {
+    $replyId = (int)$_POST['reply_id'];
+    $response = sanitize($_POST['admin_response'] ?? '');
+    $pdo->prepare("UPDATE demandes SET admin_response=? WHERE id=?")
+        ->execute([$response, $replyId]);
+    $_SESSION['flash'] = ['type'=>'success','msg'=>'Réponse enregistrée.'];
+    header('Location: ' . SITE_URL . '/admin/pages/demandes.php');
+    exit;
+}
 // Stats
 $stats = $pdo->query("
     SELECT statut, COUNT(*) as nb FROM demandes GROUP BY statut
@@ -97,6 +106,7 @@ require_once __DIR__ . '/../includes/header.php';
         <th>Client</th>
         <th>Bien concerné</th>
         <th>Message</th>
+        <th>Réponse</th>
         <th>Date</th>
         <th>Statut</th>
         <th>Actions</th>
@@ -137,6 +147,11 @@ require_once __DIR__ . '/../includes/header.php';
                 <?= sanitize($d['message']) ?>
               </div>
             </td>
+            <td>
+              <div style="font-size:0.82rem; color:#374151; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                <?= nl2br(sanitize($d['admin_response'] ?? '')) ?: '<em class="text-muted">(aucune)</em>' ?>
+              </div>
+            </td>
             <td style="font-size:0.82rem; color:var(--gray); white-space:nowrap;">
               <?= date('d/m/Y à H:i', strtotime($d['date_envoi'])) ?>
             </td>
@@ -162,6 +177,18 @@ require_once __DIR__ . '/../includes/header.php';
                     <i class="bi bi-archive"></i>
                   </a>
                 <?php endif; ?>
+                <?php if (!empty($d['telephone'])): ?>
+                  <?php
+                    $phone = preg_replace('/\D+/', '', $d['telephone']);
+                    if (substr($phone,0,1) === '0') { $phone = '221' . substr($phone,1); }
+                  ?>
+                  <a href="https://api.whatsapp.com/send?phone=<?= $phone ?>" class="action-btn" title="WhatsApp" target="_blank" style="background:#25D366; color:white;">
+                    <i class="bi bi-whatsapp"></i>
+                  </a>
+                <?php endif; ?>
+                <button class="action-btn action-btn-edit replyBtn" title="Ajouter note" data-id="<?= $d['id'] ?>" data-response="<?= htmlspecialchars($d['admin_response'] ?? '') ?>">
+                  <i class="bi bi-chat-dots"></i>
+                </button>
                 <a href="mailto:<?= sanitize($d['email_visiteur']) ?>?subject=Réponse à votre demande - <?= sanitize($d['bien_titre']) ?>"
                    class="action-btn action-btn-edit" title="Répondre par email">
                   <i class="bi bi-reply"></i>
@@ -178,5 +205,44 @@ require_once __DIR__ . '/../includes/header.php';
     </tbody>
   </table>
 </div>
+
+
+<!-- Réponse interne modal -->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ajouter / modifier la note interne</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <form method="POST">
+        <input type="hidden" name="reply_id" id="replyId">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Note</label>
+            <textarea name="admin_response" id="replyText" class="form-control" rows="6"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.replyBtn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var id = this.getAttribute('data-id');
+    var resp = this.getAttribute('data-response');
+    document.getElementById('replyId').value = id;
+    document.getElementById('replyText').value = resp;
+    var modal = new bootstrap.Modal(document.getElementById('replyModal'));
+    modal.show();
+  });
+});
+</script>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
