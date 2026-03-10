@@ -204,3 +204,13 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in C:\xampp\htdocs\immo\client\pages\bien.php on line 61
+[10-Mar-2026 15:28:50 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\immo\client/../includes/footer.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\immo\client\login.php on line 105
+[10-Mar-2026 15:28:50 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\immo\client/../includes/footer.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\immo\client\login.php:105
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\login.php on line 105
+[10-Mar-2026 15:30:23 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\immo\client/../includes/footer.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\immo\client\login.php on line 105
+[10-Mar-2026 15:30:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\immo\client/../includes/footer.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\immo\client\login.php:105
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\login.php on line 105

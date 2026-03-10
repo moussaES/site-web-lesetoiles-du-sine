@@ -12,7 +12,7 @@ $superficie_min = isset($_GET['superficie_min']) ? (float)$_GET['superficie_min'
 $tri         = $_GET['tri'] ?? 'recent';
 
 // Pagination
-$par_page = 12;
+$par_page = 9;
 $page     = max(1, (int)($_GET['page'] ?? 1));
 $offset   = ($page - 1) * $par_page;
 
@@ -138,7 +138,7 @@ $villes_list = $pdo->query("SELECT DISTINCT ville FROM biens ORDER BY ville")->f
           $photos = getPhotos($bien);
           $mainPhoto = !empty($photos) ? getPhotoUrl($photos[0]) : getDefaultPhoto();
         ?>
-        <div class="col-sm-6 col-lg-3">
+        <div class="col-sm-6 col-lg-4">
           <div class="bien-card">
             <div class="bien-card-img">
               <img src="<?= $mainPhoto ?>" alt="<?= sanitize($bien['titre']) ?>" loading="lazy"
