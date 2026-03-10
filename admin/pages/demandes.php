@@ -24,13 +24,35 @@ $demandes = $pdo->query("
     $where
     ORDER BY d.date_envoi DESC
 ")->fetchAll();
-// Réponse interne (via modal form)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reply_id'])) {
-    $replyId = (int)$_POST['reply_id'];
-    $response = sanitize($_POST['admin_response'] ?? '');
-    $pdo->prepare("UPDATE demandes SET admin_response=? WHERE id=?")
-        ->execute([$response, $replyId]);
-    $_SESSION['flash'] = ['type'=>'success','msg'=>'Réponse enregistrée.'];
+// Envoi d'email
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_email'])) {
+    $emailId = (int)$_POST['email_id'];
+    $subject = sanitize($_POST['email_subject'] ?? '');
+    $message = $_POST['email_message'] ?? '';
+
+    // Récupérer les infos de la demande
+    $demande = $pdo->prepare("SELECT * FROM demandes WHERE id=?")->execute([$emailId]);
+    $d = $pdo->prepare("SELECT * FROM demandes WHERE id=?")->fetch();
+
+    if ($d && $subject && $message) {
+        $htmlMessage = "
+        <html>
+        <head><title>{$subject}</title></head>
+        <body>
+            <p>Bonjour <strong>{$d['nom_visiteur']}</strong>,</p>
+            <p>" . nl2br(htmlspecialchars($message)) . "</p>
+            <p>Cordialement,<br>L'équipe " . SITE_NAME . "</p>
+            <hr>
+            <p><small>Cette réponse concerne votre demande pour le bien : {$d['bien_titre']}</small></p>
+        </body>
+        </html>";
+
+        if (sendEmail($d['email_visiteur'], $subject, $htmlMessage)) {
+            $_SESSION['flash'] = ['type'=>'success', 'msg'=>'Email envoyé avec succès.'];
+        } else {
+            $_SESSION['flash'] = ['type'=>'danger', 'msg'=>'Erreur lors de l\'envoi de l\'email.'];
+        }
+    }
     header('Location: ' . SITE_URL . '/admin/pages/demandes.php');
     exit;
 }
@@ -179,13 +201,20 @@ require_once __DIR__ . '/../includes/header.php';
                 <?php endif; ?>
                 <?php if (!empty($d['telephone'])): ?>
                   <?php
-                    $phone = preg_replace('/\D+/', '', $d['telephone']);
-                    if (substr($phone,0,1) === '0') { $phone = '221' . substr($phone,1); }
+                    $phone = preg_replace('/\D+221/', '', $d['telephone']);
+                    if (substr($phone,0,1) === '0') {
+                      $phone = '221' . substr($phone,1);
+                    } elseif (substr($phone,0,3) !== '221') {
+                      $phone = '221' . $phone;
+                    }
                   ?>
                   <a href="https://api.whatsapp.com/send?phone=<?= $phone ?>" class="action-btn" title="WhatsApp" target="_blank" style="background:#25D366; color:white;">
                     <i class="bi bi-whatsapp"></i>
                   </a>
                 <?php endif; ?>
+                <button class="action-btn action-btn-edit emailBtn" title="Envoyer email" data-id="<?= $d['id'] ?>" data-email="<?= htmlspecialchars($d['email_visiteur']) ?>" data-nom="<?= htmlspecialchars($d['nom_visiteur']) ?>" data-bien="<?= htmlspecialchars($d['bien_titre']) ?>">
+                  <i class="bi bi-envelope-arrow-up"></i>
+                </button>
                 <button class="action-btn action-btn-edit replyBtn" title="Ajouter note" data-id="<?= $d['id'] ?>" data-response="<?= htmlspecialchars($d['admin_response'] ?? '') ?>">
                   <i class="bi bi-chat-dots"></i>
                 </button>
@@ -206,6 +235,40 @@ require_once __DIR__ . '/../includes/header.php';
   </table>
 </div>
 
+
+<!-- Email modal -->
+<div class="modal fade" id="emailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Envoyer un email</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <form method="POST">
+        <input type="hidden" name="send_email" value="1">
+        <input type="hidden" name="email_id" id="emailId">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Destinataire</label>
+            <input type="email" class="form-control" id="emailDest" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Sujet</label>
+            <input type="text" name="email_subject" id="emailSubject" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea name="email_message" id="emailMessage" class="form-control" rows="8" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary">Envoyer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!-- Réponse interne modal -->
 <div class="modal fade" id="replyModal" tabindex="-1" aria-hidden="true">
@@ -242,6 +305,21 @@ document.querySelectorAll('.replyBtn').forEach(function(btn){
     var modal = new bootstrap.Modal(document.getElementById('replyModal'));
     modal.show();
   });
+});
+
+// Email modal handler
+$('#emailModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget);
+  var id = button.data('id');
+  var email = button.data('email');
+  var nom = button.data('nom');
+  var bien = button.data('bien');
+
+  var modal = $(this);
+  modal.find('#emailId').val(id);
+  modal.find('#emailDest').val(email);
+  modal.find('#emailSubject').val('Réponse à votre demande - ' + bien);
+  modal.find('#emailMessage').val('Bonjour ' + nom + ',\n\nConcernant votre demande pour le bien "' + bien + '",\n\n');
 });
 </script>
 

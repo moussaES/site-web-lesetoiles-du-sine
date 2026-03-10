@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row g-4">
       <div class="col-lg-4">
-        <div class="footer-title">Immo<span style="color:var(--gold)">Agence</span></div>
+        <div class="footer-title">Les etoiles du Sine<span style="color:var(--gold)">Immo</span></div>
         <p style="font-size:0.88rem; opacity:0.6; line-height:1.7;">
           Votre partenaire de confiance pour tous vos projets immobiliers. Maisons, terrains, immeubles — nous trouvons le bien idéal pour vous.
         </p>
@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      © <?= date('Y') ?> ImmoAgence — Tous droits réservés
+      © <?= date('Y') ?> Les etoiles du Sine Immo — Tous droits réservés
     </div>
   </div>
 </footer>

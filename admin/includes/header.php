@@ -24,7 +24,7 @@ $nouvelles = $pdo->query("SELECT COUNT(*) FROM demandes WHERE statut='nouvelle'"
 <aside class="admin-sidebar">
   <div class="sidebar-brand">
     <div style="font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:white;">
-      Immo<span style="color:var(--gold)">Agence</span>
+      Les etoiles du Sine<span style="color:var(--gold)">Immo</span>
     </div>
     <div style="font-size:0.72rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:1px; margin-top:0.2rem;">
       Administration

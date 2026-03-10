@@ -2,6 +2,7 @@
 // ============================================
 // CONFIGURATION BASE DE DONNÉES
 // ============================================
+session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 // Log PHP errors into project file to inspect server-side errors from this workspace
@@ -15,7 +16,7 @@ define('DB_PASS', '');           // Modifier selon votre config
 define('DB_CHARSET', 'utf8mb4');
 
 define('SITE_NAME', 'ImmoAgence');
-define('SITE_URL', 'http://192.168.56.1/immo');
+define('SITE_URL', 'http://localhost/immo');
 define('UPLOAD_DIR', __DIR__ . '/../uploads/biens/');
 define('UPLOAD_URL', SITE_URL . '/uploads/biens/');
 define('MAX_PHOTOS', 10);
@@ -36,12 +37,13 @@ try {
     die(json_encode(['error' => 'Connexion base de données impossible: ' . $e->getMessage()]));
 }
 
-// Démarrage session sécurisée
-if (session_status() === PHP_SESSION_NONE) {
-    ini_set('session.cookie_httponly', 1);
-    ini_set('session.use_strict_mode', 1);
-    session_start();
-}
+// Configuration email
+define('SMTP_HOST', 'smtp.gmail.com'); // ou votre serveur SMTP
+define('SMTP_PORT', 587); // 587 pour TLS, 465 pour SSL
+define('SMTP_USER', 'faye70286@gmail.com'); // à configurer
+define('SMTP_PASS', 'faye1167'); // mot de passe d'application Gmail
+define('SMTP_FROM', 'noreply@agence.com');
+define('SMTP_FROM_NAME', SITE_NAME);
 
 // Fonctions utilitaires globales
 function isLoggedIn(): bool {
@@ -117,6 +119,19 @@ function getPhotoUrl(string $photo): string {
 }
 
 function getDefaultPhoto(): string {
-    return SITE_URL . '/assets/images/no-photo.jpg';
+    return SITE_URL . '/assets/images/default-property.jpg';
 }
-?>
+
+function sendEmail(string $to, string $subject, string $message, string $fromName = SMTP_FROM_NAME): bool {
+    $headers = [
+        'MIME-Version: 1.0',
+        'Content-type: text/html; charset=UTF-8',
+        'From: ' . $fromName . ' <' . SMTP_FROM . '>',
+        'Reply-To: ' . SMTP_FROM,
+        'X-Mailer: PHP/' . phpversion()
+    ];
+
+    // Pour développement local, on utilise mail() simple
+    // En production, remplacez par PHPMailer ou votre service SMTP
+    return mail($to, $subject, $message, implode("\r\n", $headers));
+}

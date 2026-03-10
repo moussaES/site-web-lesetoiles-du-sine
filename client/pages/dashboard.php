@@ -41,6 +41,51 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
   </div>
 
+  <!-- PROFIL CLIENT -->
+  <div class="row mb-5">
+    <div class="col-lg-4">
+      <div style="background:white; border-radius:var(--radius-lg); padding:2rem; box-shadow:var(--shadow);">
+        <div class="text-center mb-3">
+          <div style="width:80px; height:80px; background:linear-gradient(135deg, var(--primary), var(--gold)); border-radius:50%; margin:0 auto 1rem; display:flex; align-items:center; justify-content:center;">
+            <i class="bi bi-person-fill" style="font-size:2.5rem; color:white;"></i>
+          </div>
+          <h5 style="font-weight:700; margin-bottom:0.25rem;"><?= sanitize($_SESSION['prenom'] . ' ' . $_SESSION['nom']) ?></h5>
+          <p style="font-size:0.85rem; color:var(--gray); margin-bottom:1rem;"><?= sanitize($_SESSION['email']) ?></p>
+        </div>
+        <a href="#" class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+          <i class="bi bi-pencil me-1"></i>Modifier profil
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div style="background:white; border-radius:var(--radius-lg); padding:2rem; box-shadow:var(--shadow);">
+        <h6 style="font-family:'Playfair Display',serif; margin-bottom:1.5rem;">Informations personnelles</h6>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label style="font-size:0.8rem; color:var(--gray); font-weight:600; text-transform:uppercase;">Prénom</label>
+            <p style="font-weight:500; margin:0.3rem 0 0 0;"><?= sanitize($_SESSION['prenom']) ?></p>
+          </div>
+          <div class="col-md-6">
+            <label style="font-size:0.8rem; color:var(--gray); font-weight:600; text-transform:uppercase;">Nom</label>
+            <p style="font-weight:500; margin:0.3rem 0 0 0;"><?= sanitize($_SESSION['nom']) ?></p>
+          </div>
+          <div class="col-md-6">
+            <label style="font-size:0.8rem; color:var(--gray); font-weight:600; text-transform:uppercase;">Email</label>
+            <p style="font-weight:500; margin:0.3rem 0 0 0;"><?= sanitize($_SESSION['email']) ?></p>
+          </div>
+          <div class="col-md-6">
+            <label style="font-size:0.8rem; color:var(--gray); font-weight:600; text-transform:uppercase;">Rôle</label>
+            <p style="font-weight:500; margin:0.3rem 0 0 0;">
+              <span style="background:rgba(16,185,129,0.12); color:#059669; padding:0.3rem 0.6rem; border-radius:4px; font-size:0.85rem;">
+                Client
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Stats rapides -->
   <div class="row g-3 mb-4">
     <div class="col-6 col-md-3">
@@ -175,4 +220,39 @@ require_once __DIR__ . '/../includes/header.php';
   </div>
 </div>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<!-- MODAL ÉDITION PROFIL -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modifier mon profil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <form method="POST" action="<?= SITE_URL ?>/client/pages/update_profile.php">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Prénom</label>
+            <input type="text" name="prenom" class="form-control" value="<?= sanitize($_SESSION['prenom']) ?>" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nom</label>
+            <input type="text" name="nom" class="form-control" value="<?= sanitize($_SESSION['nom']) ?>" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" value="<?= sanitize($_SESSION['email']) ?>" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nouveau mot de passe (laissez vide pour ne pas changer)</label>
+            <input type="password" name="password" class="form-control" placeholder="••••••••">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

@@ -128,3 +128,79 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in C:\xampp\htdocs\immo\client\login.php on line 105
+[08-Mar-2026 19:56:30 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\immo\client/../includes/footer.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\immo\client\login.php on line 105
+[08-Mar-2026 19:56:30 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\immo\client/../includes/footer.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\immo\client\login.php:105
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\login.php on line 105
+[08-Mar-2026 20:01:28 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\immo\client/../includes/footer.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\immo\client\login.php on line 105
+[08-Mar-2026 20:01:28 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\immo\client/../includes/footer.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\immo\client\login.php:105
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\login.php on line 105
+[08-Mar-2026 23:07:58 Europe/Berlin] PHP Warning:  mail(): Failed to connect to mailserver at "localhost" port 25, verify your "SMTP" and "smtp_port" setting in php.ini or use ini_set() in C:\xampp\htdocs\immo\includes\config.php on line 131
+[08-Mar-2026 23:15:16 Europe/Berlin] PHP Warning:  mail(): Failed to connect to mailserver at "localhost" port 25, verify your "SMTP" and "smtp_port" setting in php.ini or use ini_set() in C:\xampp\htdocs\immo\includes\config.php on line 131
+[08-Mar-2026 23:19:41 Europe/Berlin] PHP Warning:  mail(): Failed to connect to mailserver at "localhost" port 25, verify your "SMTP" and "smtp_port" setting in php.ini or use ini_set() in C:\xampp\htdocs\immo\includes\config.php on line 131
+[08-Mar-2026 23:20:24 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function PHPMailer() in C:\xampp\htdocs\immo\includes\config.php:131
+Stack trace:
+#0 C:\xampp\htdocs\immo\test_email.php(12): sendEmail('test@example.co...', 'Test ImmoAgence', '<h1>Test r\xC3\xA9uss...')
+#1 {main}
+  thrown in C:\xampp\htdocs\immo\includes\config.php on line 131
+[08-Mar-2026 23:22:42 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function PHPMailer() in C:\xampp\htdocs\immo\includes\config.php:131
+Stack trace:
+#0 C:\xampp\htdocs\immo\test_email.php(12): sendEmail('faye70286@gmail...', 'Test ImmoAgence', '<h1>Test r\xC3\xA9uss...')
+#1 {main}
+  thrown in C:\xampp\htdocs\immo\includes\config.php on line 131
+[08-Mar-2026 23:25:01 Europe/Berlin] PHP Warning:  mail(): Failed to connect to mailserver at "localhost" port 25, verify your "SMTP" and "smtp_port" setting in php.ini or use ini_set() in C:\xampp\htdocs\immo\includes\config.php on line 131
+[08-Mar-2026 23:27:13 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function getDefaultPhoto() in C:\xampp\htdocs\immo\client\pages\bien.php:61
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\pages\bien.php on line 61
+[08-Mar-2026 23:27:25 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function getDefaultPhoto() in C:\xampp\htdocs\immo\client\pages\bien.php:61
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\pages\bien.php on line 61
+[08-Mar-2026 23:36:18 Europe/Berlin] PHP Warning:  mail(): Failed to connect to mailserver at "localhost" port 25, verify your "SMTP" and "smtp_port" setting in php.ini or use ini_set() in C:\xampp\htdocs\immo\includes\config.php on line 131
+[09-Mar-2026 00:41:01 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\immo\client/../includes/footer.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\immo\client\login.php on line 105
+[09-Mar-2026 00:41:01 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\immo\client/../includes/footer.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\immo\client\login.php:105
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\login.php on line 105
+[09-Mar-2026 00:41:41 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\immo\client/../includes/footer.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\immo\client\login.php on line 105
+[09-Mar-2026 00:41:41 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\immo\client/../includes/footer.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\immo\client\login.php:105
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\login.php on line 105
+[09-Mar-2026 00:43:27 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function getDefaultPhoto() in C:\xampp\htdocs\immo\client\pages\bien.php:61
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\pages\bien.php on line 61
+[09-Mar-2026 00:50:08 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function getDefaultPhoto() in C:\xampp\htdocs\immo\client\pages\bien.php:61
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\pages\bien.php on line 61
+[10-Mar-2026 13:50:50 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function getDefaultPhoto() in C:\xampp\htdocs\immo\client\pages\bien.php:61
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\pages\bien.php on line 61
+[10-Mar-2026 13:51:25 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\immo\client/../includes/footer.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\immo\client\login.php on line 105
+[10-Mar-2026 13:51:25 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\immo\client/../includes/footer.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\immo\client\login.php:105
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\login.php on line 105
+[10-Mar-2026 13:55:34 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function getDefaultPhoto() in C:\xampp\htdocs\immo\client\pages\bien.php:61
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\pages\bien.php on line 61
+[10-Mar-2026 14:00:58 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function getDefaultPhoto() in C:\xampp\htdocs\immo\client\pages\bien.php:61
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\pages\bien.php on line 61
+[10-Mar-2026 14:01:02 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function getDefaultPhoto() in C:\xampp\htdocs\immo\client\pages\bien.php:61
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\pages\bien.php on line 61
+[10-Mar-2026 14:05:25 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function getDefaultPhoto() in C:\xampp\htdocs\immo\client\pages\bien.php:61
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\immo\client\pages\bien.php on line 61
